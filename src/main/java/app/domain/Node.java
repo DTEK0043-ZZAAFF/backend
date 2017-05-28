@@ -26,4 +26,12 @@ public class Node extends AbstractPersistable<Long> {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<Temperature> getTemperatures() {
+        return temperatures;
+    }
+
+    public List<Pir> getPirs() {
+        return pirs;
+    }
 }

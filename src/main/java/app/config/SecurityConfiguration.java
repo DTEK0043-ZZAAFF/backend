@@ -18,9 +18,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // disable csrf
         http.csrf().disable();
+
+        // required for h2-console
+        http.headers().frameOptions().sameOrigin();
     }
-
-
 
     /*
      * Really simple authentication scheme.

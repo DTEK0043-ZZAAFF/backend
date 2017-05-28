@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nodes</title>
+</head>
+<body>
+<table>
+    <caption th:utext="'Temperature measurements of node ' + ${node.getName()}">Title</caption>
+    <thead>
+    <tr><th>Temperature</th><th>Date</th></tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="temp : ${temps}">
+        <td th:utext="${temp.getValue()}">ID</td>
+        <td th:utext="${temp.getTime()}">Name</td>
+    </tr>
+    </tbody>
+
+</table>
+
+<table>
+    <caption th:utext="'Pir measurements of node ' + ${node.getName()}">Title</caption>
+    <thead>
+    <tr><th>Date</th></tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="pir : ${pirs}">
+        <td th:utext="${temp.getTime()}">Name</td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</html>

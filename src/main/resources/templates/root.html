@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nodes</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr><th>ID</th><th>name</th></tr>
+    </thead>
+
+    <tbody>
+    <!--/*@thymesVar id="nodes" type="List<app.domain.Node>"*/-->
+    <!--/*@thymesVar id="node" type="app.domain.Node"*/-->
+    <tr th:each="node : ${nodes}">
+        <td th:utext="${node.getId()}">ID</td>
+        <td th:utext="${node.getName()}">Name</td>
+    </tr>
+    </tbody>
+
+</table>
+
+
+</body>
+</html>
