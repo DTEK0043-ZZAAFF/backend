@@ -10,5 +10,6 @@ import java.util.List;
 @RepositoryRestResource
 public interface TemperatureRepository extends JpaRepository<Temperature, Long> {
     Temperature findTopByNodeOrderByTimeDesc(Node node);
+    Temperature findTop10ByNodeOrderByTimeDesc(Node node);
     List<Temperature> findBy(Node node);
 }

@@ -10,11 +10,10 @@
     </thead>
 
     <tbody>
-    <!--/*@thymesVar id="nodes" type="List<app.domain.Node>"*/-->
-    <!--/*@thymesVar id="node" type="app.domain.Node"*/-->
     <tr th:each="node : ${nodes}">
         <td th:utext="${node.getId()}">ID</td>
         <td th:utext="${node.getName()}">Name</td>
+        <td><a th:href="@{/nodes/{id}(id=${node.getId()})}">View info</a></td>
     </tr>
     </tbody>
 

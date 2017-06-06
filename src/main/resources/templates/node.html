@@ -4,6 +4,9 @@
     <title>Nodes</title>
 </head>
 <body>
+
+<a th:href="@{/api/v2/unlock/{id}(id=${node.getId()})}">Unlock this device</a>
+
 <table>
     <caption th:utext="'Temperature measurements of node ' + ${node.getName()}">Title</caption>
     <thead>

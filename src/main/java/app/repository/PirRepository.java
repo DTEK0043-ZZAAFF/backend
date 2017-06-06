@@ -10,5 +10,6 @@ import java.util.List;
 @RepositoryRestResource
 public interface PirRepository extends JpaRepository<Pir, Long> {
     Pir findTopByNodeOrderByTimeDesc(Node node);
+    Pir findTop10ByNodeOrderByTimeDesc(Node node);
     List<Pir> findAllBy(Node node);
 }
