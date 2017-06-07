@@ -2,9 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Nodes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 </head>
 <body>
 
+<canvas id="myChart"></canvas>
 <a th:href="@{/api/v2/unlock/{id}(id=${node.getId()})}">Unlock this device</a>
 
 <table>
@@ -35,5 +37,22 @@
     </tbody>
 
 </table>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: /*[[${templabel}]]*/ "_labels",
+            datasets: [{
+                label: 'Temperature',
+                data: /*[[${tempdata}]]*/ 42,
+                backgroundColor: "rgba(153,255,51,0.4)"
+            }]
+        }
+    });
+    /*]]>*/
+</script>
 </body>
 </html>
