@@ -2,6 +2,7 @@ package app.controller;
 
 import app.domain.Node;
 import app.repository.NodeRepository;
+import app.repository.Pair;
 import app.repository.PirRepository;
 import app.repository.TemperatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,13 @@ public class NodeController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String nodes(@PathVariable(value = "id") Node node, Model model) {
-        List<Object[]> values = temps.getHourAveraged(node.getId());
+        List<Pair<Double, Integer>> values = temps.getHourAveraged(node);
         List<String> labels = new LinkedList<>();
         List<Double> temps2 = new LinkedList<>();
 
-        for(Object[] data: values) {
-            temps2.add((Double) data[0]);
-            labels.add(((Integer) data[1]).toString());
+        for(Pair<Double, Integer> data: values) {
+            temps2.add(data.getValue());
+            labels.add(data.getTime().toString());
         }
         model.addAttribute("tempdata", temps2);
         model.addAttribute("templabel", labels);

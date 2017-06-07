@@ -14,6 +14,6 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Long> 
     List<Temperature> findTop10ByNodeOrderByTimeDesc(Node node);
     List<Temperature> findBy(Node node);
 
-    @Query(value = "select avg(t.value),hour(t.time) from temperature t where t.node_id = ?1 group by hour(t.time)", nativeQuery = true)
-    List<Object[]> getHourAveraged(Long node);
+    @Query(value = "select new app.repository.Pair(avg(t.value),function('hour', t.time)) from Temperature t where t.node = ?1 group by function('hour', t.time)")
+    List<Pair<Double, Integer>> getHourAveraged(Node node);
 }
