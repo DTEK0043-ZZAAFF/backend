@@ -13,7 +13,7 @@ public class Temperature extends AbstractPersistable<Long> {
     @ManyToOne(fetch = FetchType.EAGER)
     private Node node;
 
-    private float value;
+    private double value;
 
     @NotNull
     private Date time = new Date();
@@ -33,11 +33,11 @@ public class Temperature extends AbstractPersistable<Long> {
         this.time = time;
     }
 
-    public float getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(double value) {
         this.value = value;
     }
 
