@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,13 +35,13 @@ public class NodeController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String nodes(@PathVariable(value = "id") Node node, Model model) {
-        List<Pair<Double, Integer>> values = temps.getHourAveraged(node);
-        List<String> labels = new LinkedList<>();
+        List<Pair<Double, Date>> values = temps.getHourAveraged2(node);
+        List<Date> labels = new LinkedList<>();
         List<Double> temps2 = new LinkedList<>();
 
-        for(Pair<Double, Integer> data: values) {
+        for(Pair<Double, Date> data: values) {
             temps2.add(data.getValue());
-            labels.add(data.getTime().toString());
+            labels.add(data.getTime());
         }
         model.addAttribute("tempdata", temps2);
         model.addAttribute("templabel", labels);
