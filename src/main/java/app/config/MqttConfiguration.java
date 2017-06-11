@@ -18,12 +18,23 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
 
+/**
+ * MQTT configuration class
+ *
+ * Automatically configures MQTT messaging.
+ */
 @Configuration
 @IntegrationComponentScan
 public class MqttConfiguration {
+    /**
+     * MQTT server URL to connect. Value annotation makes Spring automatically read value from properties.
+     */
     @Value("${my.mqtt.url}")
     private String mqttUrl;
 
+    /**
+     * Client id to use when connecting to MQTT server
+     */
     @Value("${my.mqtt.clientId}")
     private String clientId;
 
@@ -48,11 +59,24 @@ public class MqttConfiguration {
         return new DirectChannel();
     }
 
+    /**
+     * This interface enables sending messages
+     */
     @MessagingGateway(defaultRequestChannel = "mqttOutboundChannel")
     public interface MyGateway {
 
+        /** Sends data to MQTT server
+         *
+         * @param data data to send into MQTT server with default topic
+         */
         void sendToMqtt(String data);
 
+        /** Sends data to MQTT server
+         *
+         * Message object includes topic for message being sent.
+         *
+         * @param message Message to send.
+         */
         void sendToMqtt(Message message);
 
     }

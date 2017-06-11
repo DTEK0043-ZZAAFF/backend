@@ -7,8 +7,17 @@ import org.springframework.data.rest.core.mapping.RepositoryDetectionStrategy;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
+/**
+ * REST configuration class
+ */
 @Configuration
 public class RestConfiguration {
+    /**
+     * Enables Spring Data REST interface.
+     *
+     * Note: No security at all
+     * @return configuration which is processed by ???
+     */
     @Bean
     public RepositoryRestConfigurer repositoryRestConfigurer() {
         return new RepositoryRestConfigurerAdapter() {

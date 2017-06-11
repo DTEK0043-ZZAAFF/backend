@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Configures additional REST endpoints
+ */
 @RestController
 @RequestMapping(value = "/api/v2")
 public class AdditionalRestController {
@@ -30,6 +33,12 @@ public class AdditionalRestController {
     @Autowired
     private MqttConfiguration.MyGateway myGateway;
 
+    /**
+     * Checks if given UUID has permission to unlock given node
+     * @param node Node to check
+     * @param uid uid to check
+     * @return HTTP status code 200 if given UID has rights to unlock node otherwise
+     */
     @RequestMapping(value = "/checkpermission/{id}/{uid}")
     public HttpEntity openDoor(@PathVariable(value = "id") Node node, @PathVariable(value = "uid") String uid) {
         if (nodes.countByPermissionsContains(permissions.findByUid(uid)) != 0) {
@@ -39,8 +48,14 @@ public class AdditionalRestController {
         }
     }
 
+    /**
+     * Sends unlock request to gateway through MQTT
+     * @param node node to unlock
+     * @return
+     */
     @RequestMapping(value = "/unlock/{id}")
     public HttpEntity unlock(@PathVariable(value = "id") Node node) {
+        // TODO: null handling
         Message message = new Message() {
             @Override
             public Object getPayload() {

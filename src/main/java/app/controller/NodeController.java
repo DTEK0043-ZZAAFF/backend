@@ -16,6 +16,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Configures MVC for web pages
+ */
 @Controller
 @RequestMapping(value = "/nodes")
 public class NodeController {
@@ -35,20 +38,24 @@ public class NodeController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String nodes(@PathVariable(value = "id") Node node, Model model) {
-        List<Pair<Double, Date>> values = temps.getHourAveraged2(node);
-        List<Date> labels = new LinkedList<>();
-        List<Double> temps2 = new LinkedList<>();
+        if (node != null) {
+            List<Pair<Double, Date>> values = temps.getHourAveraged2(node);
+            List<Date> labels = new LinkedList<>();
+            List<Double> temps2 = new LinkedList<>();
 
-        for(Pair<Double, Date> data: values) {
-            temps2.add(data.getValue());
-            labels.add(data.getTime());
+            for (Pair<Double, Date> data : values) {
+                temps2.add(data.getValue());
+                labels.add(data.getTime());
+            }
+            model.addAttribute("tempdata", temps2);
+            model.addAttribute("templabel", labels);
+
+            model.addAttribute("node", node);
+            model.addAttribute("temps", temps.findTop10ByNodeOrderByTimeDesc(node));
+            model.addAttribute("pirs", node.getPirs());
+            return "node";
+        } else {
+            return null; // TODO: fix this. HOW?
         }
-        model.addAttribute("tempdata", temps2);
-        model.addAttribute("templabel", labels);
-
-        model.addAttribute("node", node);
-        model.addAttribute("temps", temps.findTop10ByNodeOrderByTimeDesc(node));
-        model.addAttribute("pirs", node.getPirs());
-        return "node";
     }
 }

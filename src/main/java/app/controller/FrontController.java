@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Configures MVC for main page
+ */
 @Controller
 public class FrontController {
     @Autowired
