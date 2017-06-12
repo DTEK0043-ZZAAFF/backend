@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class NodeController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String nodes(@PathVariable(value = "id") Node node, Model model) {
+    public String nodes(HttpServletResponse resp, @PathVariable(value = "id") Node node, Model model) {
         if (node != null) {
             List<Pair<Double, Date>> values = temps.getHourAveraged2(node);
             List<Date> labels = new LinkedList<>();
@@ -55,7 +56,8 @@ public class NodeController {
             model.addAttribute("pirs", node.getPirs());
             return "node";
         } else {
-            return null; // TODO: fix this. HOW?
+            resp.setStatus(404);
+            return null;
         }
     }
 }
