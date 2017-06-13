@@ -15,4 +15,36 @@ public class Pir extends AbstractPersistable<Long> {
 
     @NotNull
     private Date time = new Date();
+
+    public Pir() {
+    }
+
+    public Pir(Node node) {
+        this.node = node;
+    }
+
+    public Pir(Node node, Date time) {
+        this.node = node;
+        this.time = time;
+    }
+
+    public Pir(Date time) {
+        this.time = time;
+    }
+
+    public Node getNode() {
+        return node;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 }
