@@ -5,12 +5,14 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 public class Temperature extends AbstractPersistable<Long> {
     @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull
     private Node node;
 
     private double value;
@@ -19,18 +21,6 @@ public class Temperature extends AbstractPersistable<Long> {
     private Date time = new Date();
 
     public Temperature() {
-    }
-
-    public Temperature(float value, Node node) {
-        this.value = value;
-        this.node = node;
-        this.time = new Date();
-    }
-
-    public Temperature(float value, Node node, Date time) {
-        this.value = value;
-        this.node = node;
-        this.time = time;
     }
 
     public double getValue() {

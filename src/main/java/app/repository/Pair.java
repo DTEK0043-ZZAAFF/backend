@@ -1,30 +1,42 @@
 package app.repository;
 
 
-import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Pair<T,V> {
-    private T value;
-    private V time;
+public class Pair<T, S> {
+    private T left;
+    private S right;
 
-    public Pair(T value, V time) {
-        this.value = value;
-        this.time = time;
+    public Pair(T left, S right) {
+        this.left = left;
+        this.right = right;
     }
 
-    public T getValue() {
-        return value;
+    public T getLeft() {
+        return left;
     }
 
-    public void setValue(T value) {
-        this.value = value;
+    public void setLeft(T left) {
+        this.left = left;
     }
 
-    public V getTime() {
-        return time;
+    public S getRight() {
+        return right;
     }
 
-    public void setTime(V time) {
-        this.time = time;
+    public void setRight(S right) {
+        this.right = right;
+    }
+
+    public static<L,R> Pair<List<L>, List<R>> unzip(List<Pair<L, R>> listOfPairs) {
+        List<L> left = new LinkedList<>();
+        List<R> right = new LinkedList<>();
+
+        for(Pair<L,R> pair: listOfPairs) {
+            left.add(pair.getLeft());
+            right.add(pair.getRight());
+        }
+        return new Pair<>(left, right);
     }
 }

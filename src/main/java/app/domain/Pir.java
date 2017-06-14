@@ -1,7 +1,9 @@
 package app.domain;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -11,21 +13,15 @@ import java.util.Date;
 @Entity
 public class Pir extends AbstractPersistable<Long> {
     @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull
     private Node node;
 
     @NotNull
     private Date time = new Date();
 
+    private boolean up = true;
+
     public Pir() {
-    }
-
-    public Pir(Node node) {
-        this.node = node;
-    }
-
-    public Pir(Node node, Date time) {
-        this.node = node;
-        this.time = time;
     }
 
     public Pir(Date time) {
@@ -46,5 +42,13 @@ public class Pir extends AbstractPersistable<Long> {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
     }
 }

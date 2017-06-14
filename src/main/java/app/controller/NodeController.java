@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -40,18 +39,16 @@ public class NodeController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String nodes(HttpServletResponse resp, @PathVariable(value = "id") Node node, Model model) {
         if (node != null) {
-            List<Pair<Double, Date>> values = temps.getHourAveraged2(node);
-            List<Date> labels = new LinkedList<>();
-            List<Double> temps2 = new LinkedList<>();
+            Pair<List<Date>, List<Double>> pair = Pair.unzip(temps.getHourAveraged2(node));
 
-            for (Pair<Double, Date> data : values) {
-                temps2.add(data.getValue());
-                labels.add(data.getTime());
-            }
-            model.addAttribute("tempdata", temps2);
-            model.addAttribute("templabel", labels);
-
+            // for node name
             model.addAttribute("node", node);
+
+            // chart data
+            model.addAttribute("templabel", pair.getLeft());
+            model.addAttribute("tempdata", pair.getRight());
+
+            // raw data
             model.addAttribute("temps", temps.findTop10ByNodeOrderByTimeDesc(node));
             model.addAttribute("pirs", node.getPirs());
             return "node";
