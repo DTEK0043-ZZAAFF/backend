@@ -88,6 +88,7 @@ public class AdditionalRestController {
      * @param node Node to fetch information for
      * @return Response with data or erroring status code
      */
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/pir/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity pirsAsJson(HttpServletResponse resp, @PathVariable(value = "id") Node node) {
         if (node != null) {
@@ -108,8 +109,8 @@ public class AdditionalRestController {
      * @param node Node to fetch information for
      * @return Response with data or erroring status code
      */
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/temp/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public ResponseEntity tempsAveragedAsJson(HttpServletResponse resp, @PathVariable(value = "id") Node node) {
         if (node != null) {
             return new ResponseEntity<>(Pair.unzip(temps.getHourAveraged2(node)), HttpStatus.OK);

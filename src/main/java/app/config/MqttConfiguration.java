@@ -38,10 +38,18 @@ public class MqttConfiguration {
     @Value("${my.mqtt.clientId}")
     private String clientId;
 
+    @Value("${my.mqtt.user}")
+    private String user;
+
+    @Value("${my.mqtt.pass}")
+    private String pass;
+
     @Bean
     public MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
         factory.setServerURIs(mqttUrl);
+        factory.setUserName(user);
+        factory.setPassword(pass);
         return factory;
     }
 
