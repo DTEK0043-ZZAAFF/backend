@@ -7,14 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 @RepositoryRestResource
 public interface TemperatureRepository extends JpaRepository<Temperature, Long> {
     Temperature findTopByNodeOrderByTimeDesc(Node node);
     List<Temperature> findTop10ByNodeOrderByTimeDesc(Node node);
-    List<Temperature> findBy(Node node);
+    List<Temperature> findByNode(Node node);
 
     @Query(value = "select new app.repository.Pair(function('hour', t.time),avg(t.value)) from Temperature t where t.node = ?1 group by function('hour', t.time)")
     List<Pair<Integer, Double>> getHourAveraged(Node node);

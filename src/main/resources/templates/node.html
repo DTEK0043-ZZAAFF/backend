@@ -2,12 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Nodes</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/RickStrahl/json.date-extensions/1.2.2/json.date-extensions.min.js"></script>
+    <script>
+        JSON.useDateParser();
+    </script>
 </head>
 <body>
-
-<canvas id="myChart"></canvas>
-<a th:href="@{/api/v2/unlock/{id}(id=${node.getId()})}">Unlock this device</a>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // TODO: inject URLs with th
+    var tempURL = /*[[@{/api/v2/temp/{id}(id=${node.getId()})}]]*/ "http://localhost:8080/api/v2/temp/1";
+    var pirURL =   /*[[@{/api/v2/pir/{id}(id=${node.getId()})}]]*/ "http://localhost:8080/api/v2/pir/1";
+    /*]]>*/
+</script>
+<div><div style="padding-left: 5%;padding-right: 10%">Pir measurements</div></div>
+<div id="pirChart" style="height: 180px;padding-left: 5%;padding-right: 10%"></div>
+<div id="tempChart" style="height: 180px;"></div>
+<div>
+    <a th:href="@{/api/v2/unlock/{id}(id=${node.getId()})}">Unlock this device</a>
+</div>
 
 <table>
     <caption th:utext="'Temperature measurements of node ' + ${node.getName()}">Title</caption>
@@ -38,19 +53,84 @@
 
 </table>
 
-<script th:inline="javascript">
+<script>
     /*<![CDATA[*/
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: /*[[${templabel}]]*/ "_labels",
-            datasets: [{
-                label: 'Temperature',
-                data: /*[[${tempdata}]]*/ 42,
-                backgroundColor: "rgba(153,255,51,0.4)"
-            }]
+    $(document).ready(function () {
+        function drawPirChart() {
+            var container = document.getElementById('pirChart');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({ type: 'string', id: 'hardoced' });
+            dataTable.addColumn({ type: 'string', id: 'tt' });
+            dataTable.addColumn({ type: 'datetime', id: 'Start' });
+            dataTable.addColumn({ type: 'datetime', id: 'End' });
+            var options = {
+                hAxis: { format: 'dTHH:mm' },
+                timeline: {
+                    showRowLabels: false,
+                    groupByRowLabel: true,
+                    colorByRowLabel: false
+                },
+                avoidOverlappingGridLines: false,
+                title: "PIR detections"
+            };
+
+            $.get({url: pirURL, dataType: "text"}, function (data) {
+                dataWithDates = JSON.parse(data);
+                var bs = [];
+                dataWithDates.forEach(function (el) {
+                    hs = ["hardcoded"];
+                    //hs.push(el[0]); // label
+                    hs.push(""); // label
+                    hs.push(el[1]); // start
+                    hs.push(el[2]); // end
+                    bs.push(hs)
+                });
+                dataTable.addRows(bs);
+                chart.draw(dataTable, options);
+            });
         }
+
+        function drawTempChart() {
+            var container = document.getElementById('tempChart');
+            var chart = new google.visualization.LineChart(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({ type: 'date', id: 'date' });
+            dataTable.addColumn({ type: 'number', id: 'value' });
+            var options = {
+                //hAxis: { format: 'dTHH:mm' },
+                timeline: {
+                    showRowLabels: false,
+                    groupByRowLabel: true
+                },
+                avoidOverlappingGridLines: false,
+                title: "Temperature"
+            };
+
+            $.get({url: tempURL, dataType: "text"}, function (data) {
+                dataWithDates = JSON.parse(data);
+                var bs = [];
+                for (i=0;i<dataWithDates.left.length; i++) {
+                    hs = [dataWithDates.left[i], dataWithDates.right[i]];
+                    bs.push(hs);
+                }
+                dataTable.addRows(bs);
+                chart.draw(dataTable, options);
+            });
+        }
+
+        var draw = function () {
+            drawPirChart();
+            drawTempChart();
+        };
+
+        var foo = function () {
+            google.charts.load('current', {'packages':['corechart', 'timeline']});
+            google.charts.setOnLoadCallback(draw);
+        };
+        foo();
     });
     /*]]>*/
 </script>
