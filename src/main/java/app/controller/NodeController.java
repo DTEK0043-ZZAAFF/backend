@@ -50,7 +50,7 @@ public class NodeController {
 
             // raw data
             model.addAttribute("temps", temps.findTop10ByNodeOrderByTimeDesc(node));
-            model.addAttribute("pirs", node.getPirs());
+            model.addAttribute("pirs", pirs.findTop10ByNodeAndUpOrderByTimeDesc(node, true));
             return "node";
         } else {
             resp.setStatus(404);
