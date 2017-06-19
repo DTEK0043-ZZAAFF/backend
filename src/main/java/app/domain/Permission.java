@@ -5,6 +5,9 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * JPA entity for permissions
+ */
 @Entity
 public class Permission extends AbstractPersistable<Long> {
     @Column(unique = true)

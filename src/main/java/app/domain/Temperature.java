@@ -9,6 +9,9 @@ import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/**
+ * JPA entity for temperature measurement
+ */
 @Entity
 public class Temperature extends AbstractPersistable<Long> {
     @ManyToOne(fetch = FetchType.EAGER)

@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+/**
+ * Configure jackson to serialize dates as ISO8601. Makes easier to parse tiemstamps
+ * as Date objects in client-side
+ */
 @Configuration
 public class JackSonConfiguration {
     @Bean

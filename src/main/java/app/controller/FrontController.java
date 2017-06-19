@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Configures MVC for main page
+ * Configures controller for main page
  */
 @Controller
 public class FrontController {

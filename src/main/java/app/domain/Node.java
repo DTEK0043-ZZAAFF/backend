@@ -5,6 +5,9 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * JPa entity for node
+ */
 @Entity
 public class Node extends AbstractPersistable<Long> {
     @Column(unique = true)

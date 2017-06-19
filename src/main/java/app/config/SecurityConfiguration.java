@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     /*
-     * Really simple authentication scheme.
+     * Really simple authentication scheme. Not (yet) used in our code
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

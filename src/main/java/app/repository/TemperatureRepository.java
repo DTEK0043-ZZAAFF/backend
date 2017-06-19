@@ -18,6 +18,13 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Long> 
     @Query(value = "select new app.repository.Pair(function('hour', t.time),avg(t.value)) from Temperature t where t.node = ?1 group by function('hour', t.time)")
     List<Pair<Integer, Double>> getHourAveraged(Node node);
 
+    /**
+     * Count average temperature once per hour with one hour window,
+     * @param node Node to fetch information for
+     * @return List if pair. Pair contains time of first value for hour and average temperature for given hour
+     *
+     */
+    // TODO: return timestamp truncated to full hour
     @Query(value = "select new app.repository.Pair(min(t.time),avg(t.value)) from Temperature t where t.node = ?1 group by function('hour', t.time), function('trunc', t.time) order by function('trunc', t.time), function('hour', t.time)")
     List<Pair<Date, Double>> getHourAveraged2(Node node);
 

@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Configures MVC for web pages
+ * Configures controller for particular node
  */
 @Controller
 @RequestMapping(value = "/nodes")
@@ -31,11 +31,21 @@ public class NodeController {
     @Autowired
     private PirRepository pirs;
 
+    /**
+     * Redirect back to frontpage if node is not given
+     */
     @RequestMapping(method = RequestMethod.GET)
-    public String node(Model model) {
+    public String node() {
         return "redirect:/";
     }
 
+    /**
+     * Controller for single node page. Injects required data for thymeleaf templating machine
+     * @param resp Request's HttpServletResponse instance. Used if given node not found
+     * @param node Node to display
+     * @param model Model to interact
+     * @return Thymeleaf template name or null with 404 status code if node not found
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String nodes(HttpServletResponse resp, @PathVariable(value = "id") Node node, Model model) {
         if (node != null) {

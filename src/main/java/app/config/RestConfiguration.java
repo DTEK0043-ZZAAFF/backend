@@ -16,7 +16,7 @@ public class RestConfiguration {
      * Enables Spring Data REST interface.
      *
      * Note: No security at all
-     * @return configuration which is processed by ???
+     * @return Configuration directives
      */
     @Bean
     public RepositoryRestConfigurer repositoryRestConfigurer() {
